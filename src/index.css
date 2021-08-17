@@ -10,3 +10,7 @@ body {
 .App {
   text-align: center;
 }
+
+.details {
+  border-bottom: 1px solid grey
+}

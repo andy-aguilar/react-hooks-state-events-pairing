@@ -1,18 +1,41 @@
-import video from "../data/video.js";
+import importVideo from "../data/video.js";
+import Video from "./Video.js";
+import Details from "./Details.js";
+import Comments from "./Comments.js";
+import React, {useState} from "react"
 
 function App() {
-  console.log("Here's your data:", video);
+  const [video, setVideo] = useState(importVideo)
+  const [displayComments, setDisplayComments] = useState(false)
+  // const video = {
+  //   id: 1,
+  //   title: "React Today and Tomorrow and 90% Cleaner React With Hooks",
+  //   embedUrl: "https://www.youtube.com/embed/dpw9EHDh2bM",
+  //   views: 730707,
+  //   createdAt: "Oct 26, 2018",
+  //   upvotes: 9210,
+  //   downvotes: 185,
+  //   comments: [],
+  // };
+
+  const addVote = (e) => {
+    const newVotes = video[e.target.name] + 1
+    const newVideo = {...video, [e.target.name]: newVotes}
+    setVideo(newVideo)
+  }
+
+  //
 
   return (
     <div className="App">
-      <iframe
-        width="919"
-        height="525"
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-        frameborder="0"
-        allowfullscreen
-        title="Thinking in React"
+      <Video title={video.title} embedUrl={video.embedUrl}/>
+      <Details 
+        {...video} 
+        addVote={addVote} 
+        displayComments={displayComments} 
+        setDisplayComments={setDisplayComments}
       />
+      {displayComments ? <Comments comments={video.comments} /> : null}
     </div>
   );
 }
